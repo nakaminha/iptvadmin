@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel IPTV | Registro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #6c5ce7;
+            --dark-bg: #1a1a2e;
+            --darker-bg: #16213e;
+            --light-text: #f1f1f1;
+            --success-color: #28a745;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(108, 92, 231, 0.1) 0%, transparent 20%);
+        }
+        
+        .register-card {
+            background-color: rgba(26, 26, 46, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+        }
+        
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+            color: var(--light-text);
+            box-shadow: 0 0 0 0.25rem rgba(108, 92, 231, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #5649c5;
+            border-color: #5649c5;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+        
+        .input-group-text {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-text);
+        }
+        
+        .password-strength {
+            height: 5px;
+            margin-top: 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .strength-0 { width: 20%; background-color: #dc3545; }
+        .strength-1 { width: 40%; background-color: #fd7e14; }
+        .strength-2 { width: 60%; background-color: #ffc107; }
+        .strength-3 { width: 80%; background-color: #28a745; }
+        .strength-4 { width: 100%; background-color: #20c997; }
+        
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center h-100">
+        <div class="register-card shadow-lg p-4">
+            <div class="text-center mb-4">
+                <i class="bi bi-tv-fill" style="font-size: 3rem; color: var(--primary-color);"></i>
+                <h1 class="h3 mt-2">Criar Conta</h1>
+                <p class="text-muted">Preencha os dados para se registrar</p>
+            </div>
+            
+            <form id="registerForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="username" class="form-label">Usuário*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                            <input type="text" class="form-control" id="username" placeholder="Digite um nome de usuário" required minlength="4">
+                        </div>
+                        <small class="text-muted">Mínimo 4 caracteres</small>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Email*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                            <input type="email" class="form-control" id="email" placeholder="seu@email.com" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="password" class="form-label">Senha*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                            <input type="password" class="form-control" id="password" placeholder="Digite sua senha" required minlength="8">
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                <i class="bi bi-eye-fill"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength strength-0" id="passwordStrength"></div>
+                        <small class="text-muted">Mínimo 8 caracteres (letras, números e símbolos)</small>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="confirmPassword" class="form-label">Confirmar Senha*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                            <input type="password" class="form-control" id="confirmPassword" placeholder="Confirme sua senha" required>
+                        </div>
+                        <small id="passwordMatch" class="text-danger"></small>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="macAddress" class="form-label">Endereço MAC (Opcional)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-router"></i></span>
+                        <input type="text" class="form-control" id="macAddress" placeholder="00:1A:2B:3C:4D:5E" pattern="^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$">
+                    </div>
+                    <small class="text-muted">Formato: 00:1A:2B:3C:4D:5E</small>
+                </div>
+                
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="terms" required>
+                    <label class="form-check-label" for="terms">
+                        Eu concordo com os <a href="#" style="color: var(--primary-color);">Termos de Serviço</a> e <a href="#" style="color: var(--primary-color);">Política de Privacidade</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary w-100 py-2 mb-3" id="registerBtn">Registrar</button>
+                
+                <div class="text-center">
+                    <p>Já tem uma conta? <a href="login.html" style="color: var(--primary-color);">Faça login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+// Enviar formulário de registro
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Limpar erros anteriores
+    document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    document.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+    
+    const registerBtn = document.getElementById('registerBtn');
+    registerBtn.disabled = true;
+    registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Registrando...';
+    
+    try {
+        const formData = {
+            username: document.getElementById('username').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            password: document.getElementById('password').value,
+            macAddress: document.getElementById('macAddress').value.trim() || undefined
+        };
+        
+        // Validação básica do cliente
+        if (formData.password !== document.getElementById('confirmPassword').value) {
+            throw new Error('As senhas não coincidem');
+        }
+        
+        if (!document.getElementById('terms').checked) {
+            throw new Error('Você deve aceitar os termos de serviço');
+        }
+        
+        const response = await fetch('http://localhost:3000/auth/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        });
+        
+        // Verificar se a resposta é JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            const text = await response.text();
+            throw new Error(text || 'Resposta inválida do servidor');
+        }
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+            if (data.field) {
+                showError(data.field, data.error);
+            }
+            throw new Error(data.error || 'Erro ao registrar');
+        }
+        
+        alert(data.message || 'Registro realizado com sucesso!');
+        window.location.href = 'login.html';
+        
+    } catch (error) {
+        console.error('Erro no registro:', error);
+        if (!error.message.includes('Resposta inválida')) {
+            alert(error.message || 'Erro ao registrar. Tente novamente.');
+        }
+    } finally {
+        registerBtn.disabled = false;
+        registerBtn.innerHTML = 'Registrar';
+    }
+});
+
+// Função auxiliar para mostrar erros
+function showError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    if (!field) return;
+    
+    field.classList.add('is-invalid');
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'invalid-feedback';
+    errorDiv.textContent = message;
+    
+    field.parentNode.appendChild(errorDiv);
+    field.focus();
+}
+    </script>
+</body>
+</html>

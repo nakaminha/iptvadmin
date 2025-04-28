@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - IPTV Garantido</title>
+    <link rel="stylesheet" href="/dashboard/styles/main.css">
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo, <span id="username"></span>!</h1>
+        <button id="logoutBtn">Sair</button>
+    </header>
+    
+    <main>
+        <section class="stats">
+            <div class="card">
+                <h3>Canais Ativos</h3>
+                <p id="activeChannels">0</p>
+            </div>
+            <!-- Adicione mais cards conforme necessário -->
+        </section>
+    </main>
+
+    <script src="/dashboard/scripts/auth.js"></script>
+    <script src="/dashboard/scripts/dashboard.js"></script>
+    <script>
+        // Carrega dados do usuário
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        
+        if (!currentUser) {
+            window.location.href = '/login.html';
+        } else {
+            document.getElementById('userName').textContent = currentUser.username;
+            document.getElementById('userEmail').textContent = currentUser.email;
+            document.getElementById('userAvatar').src = currentUser.avatar;
+        }
+    
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await fetch('/auth/logout', { 
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                sessionStorage.removeItem('currentUser');
+                window.location.href = '/login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
+    </script>    
+</body>
+</html>

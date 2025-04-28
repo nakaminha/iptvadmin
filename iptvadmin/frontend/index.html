@@ -1,0 +1,16 @@
+<!-- frontend/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IPTV Garantido</title>
+</head>
+<body>
+    <h1>Funcionandos!</h1>
+    <script>
+        fetch('/api/health')
+            .then(r => r.json())
+            .then(console.log)
+            .catch(console.error);
+    </script>
+</body>
+</html>

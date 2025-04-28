@@ -1,0 +1,144 @@
+[2025-04-28 18:24:53] [ERROR] Falha ao iniciar o servidor:
+Stack Trace: ReferenceError: db is not defined
+    at Object.<anonymous> (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:71:5)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+{}
+[2025-04-28 18:25:21] [ERROR] Falha ao iniciar o servidor:
+Stack Trace: ReferenceError: db is not defined
+    at Object.<anonymous> (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:71:5)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+{}
+[2025-04-28 18:31:19] [ERROR] ❌ Falha crítica:
+Stack Trace: Error: Conexão com o banco de dados não estabelecida
+    at startServer (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:61:19)
+    at Object.<anonymous> (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:76:1)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+{}
+[2025-04-28 18:35:48] [ERROR] 💥 Falha crítica:
+Stack Trace: ReferenceError: dbReady is not defined
+    at startServer (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:58:9)
+    at Object.<anonymous> (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:73:1)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+{}
+[2025-04-28 18:38:31] [ERROR] 💥 Falha crítica:
+Stack Trace: ReferenceError: dbReady is not defined
+    at startServer (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:58:9)
+    at Object.<anonymous> (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:73:1)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+{}
+[2025-04-28 18:39:04] [ERROR] Falha ao iniciar servidor:
+Stack Trace: ReferenceError: getDatabase is not defined
+    at startServer (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:56:44)
+    at Object.<anonymous> (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\app.js:69:1)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14)
+    at Object..js (node:internal/modules/cjs/loader:1895:10)
+    at Module.load (node:internal/modules/cjs/loader:1465:32)
+    at Function._load (node:internal/modules/cjs/loader:1282:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+{}
+[2025-04-28 18:53:41] [ERROR] Erro inesperado no registro:
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'get')
+    at C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\routes\auth.js:125:12
+    at Layer.handle [as handle_request] (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\index.js:280:10)
+    at C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\routes\auth.js:10:5
+    at Layer.handle [as handle_request] (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\layer.js:95:5)
+{}
+[2025-04-28 18:58:18] [ERROR] Erro inesperado no registro:
+Stack Trace: TypeError: Cannot read properties of undefined (reading 'get')
+    at C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\routes\auth.js:141:12
+    at Layer.handle [as handle_request] (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\layer.js:95:5)
+    at next (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\route.js:144:13)
+    at Route.dispatch (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\route.js:114:3)
+    at Layer.handle [as handle_request] (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\layer.js:95:5)
+    at C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\index.js:284:15
+    at Function.process_params (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\index.js:280:10)
+    at C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\routes\auth.js:26:5
+    at Layer.handle [as handle_request] (C:\Users\Isaac Medeiros\Desktop\Nova pasta\backend\node_modules\express\lib\router\layer.js:95:5)
+{}
+[2025-04-28 19:16:18] [ERROR] Database error:
+Stack Trace: Error: SQLITE_ERROR: no such column: avatar
+{
+  "errno": 1,
+  "code": "SQLITE_ERROR"
+}
+[2025-04-28 19:16:54] [ERROR] Database error:
+Stack Trace: Error: SQLITE_ERROR: near "FROM": syntax error
+{
+  "errno": 1,
+  "code": "SQLITE_ERROR"
+}
+[2025-04-28 19:16:55] [ERROR] Database error:
+Stack Trace: Error: SQLITE_ERROR: near "FROM": syntax error
+{
+  "errno": 1,
+  "code": "SQLITE_ERROR"
+}
+[2025-04-28 19:17:27] [ERROR] Database error:
+Stack Trace: Error: SQLITE_ERROR: no such column: avatar
+{
+  "errno": 1,
+  "code": "SQLITE_ERROR"
+}
+[2025-04-28 19:19:03] [ERROR] Database error:
+Stack Trace: Error: SQLITE_ERROR: no such column: avatar
+{
+  "errno": 1,
+  "code": "SQLITE_ERROR"
+}
+[2025-04-28 19:19:04] [ERROR] Database error:
+Stack Trace: Error: SQLITE_ERROR: no such column: avatar
+{
+  "errno": 1,
+  "code": "SQLITE_ERROR"
+}
+[2025-04-28 19:19:04] [ERROR] Database error:
+Stack Trace: Error: SQLITE_ERROR: no such column: avatar
+{
+  "errno": 1,
+  "code": "SQLITE_ERROR"
+}
