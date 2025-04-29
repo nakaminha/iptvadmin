@@ -1,54 +1,108 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - IPTV Garantido</title>
-    <link rel="stylesheet" href="/dashboard/styles/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel IPTV</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <link rel="stylesheet" href="./styles/main.css">
 </head>
-<body>
-    <header>
-        <h1>Bem-vindo, <span id="username"></span>!</h1>
-        <button id="logoutBtn">Sair</button>
-    </header>
+<body class="bg-gray-900 text-white flex">
+<main>
     
-    <main>
-        <section class="stats">
-            <div class="card">
-                <h3>Canais Ativos</h3>
-                <p id="activeChannels">0</p>
-            </div>
-            <!-- Adicione mais cards conforme necessário -->
-        </section>
-    </main>
+    <div class="bg-gray-800 p-6 rounded-lg shadow mb-10">
+        <h3 class="text-2xl font-semibold mb-6">Clientes em 3D</h3>
+        <div id="grafico3d" class="w-full h-[500px]"></div>
+      </div>
+</main>
+<!-- Gráfico 3D -->
 
-    <script src="/dashboard/scripts/auth.js"></script>
-    <script src="/dashboard/scripts/dashboard.js"></script>
-    <script>
-        // Carrega dados do usuário
-        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-        
-        if (!currentUser) {
-            window.location.href = '/login.html';
-        } else {
-            document.getElementById('userName').textContent = currentUser.username;
-            document.getElementById('userEmail').textContent = currentUser.email;
-            document.getElementById('userAvatar').src = currentUser.avatar;
-        }
-    
-        // Logout
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-            try {
-                await fetch('/auth/logout', { 
-                    method: 'POST',
-                    credentials: 'include'
-                });
-                sessionStorage.removeItem('currentUser');
-                window.location.href = '/login.html';
-            } catch (error) {
-                console.error('Logout error:', error);
-            }
-        });
-    </script>    
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 min-h-screen p-5">
+    <h1 class="text-2xl font-bold mb-10">Clover Streamings</h1>
+    <nav class="flex flex-col gap-5">
+      <a href="#" class="hover:text-blue-400">Dashboard</a>
+      <a href="#" class="hover:text-blue-400">Cadastrar Cliente</a>
+      <a href="#" class="hover:text-blue-400">Lista de Clientes</a>
+      <a href="#" class="hover:text-blue-400">Planos</a>
+      <a href="#" class="hover:text-blue-400">Configurações</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-8 overflow-y-auto">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-3xl font-semibold">Dashboard</h2>
+      <button id="openModal" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded shadow">
+        Cadastrar Cliente
+      </button>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-gray-800 p-6 rounded-lg shadow hover:shadow-xl transition">
+        <h3 class="text-xl font-bold mb-2">Clientes Ativos</h3>
+        <p class="text-3xl" id="ativos">0</p>
+      </div>
+      <div class="bg-gray-800 p-6 rounded-lg shadow hover:shadow-xl transition">
+        <h3 class="text-xl font-bold mb-2">Clientes Inativos</h3>
+        <p class="text-3xl" id="inativos">0</p>
+      </div>
+      <div class="bg-gray-800 p-6 rounded-lg shadow hover:shadow-xl transition">
+        <h3 class="text-xl font-bold mb-2">Em Teste</h3>
+        <p class="text-3xl" id="teste">0</p>
+      </div>
+    </div>
+
+    <!-- Tabela de Clientes -->
+    <div class="bg-gray-800 p-6 rounded-lg shadow">
+      <h3 class="text-2xl font-semibold mb-4">Clientes</h3>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left">
+          <thead>
+            <tr class="border-b border-gray-700">
+              <th class="py-2">Nome</th>
+              <th class="py-2">E-mail</th>
+              <th class="py-2">Telefone</th>
+              <th class="py-2">Plano</th>
+              <th class="py-2">Status</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaClientes">
+            <!-- Linhas serão adicionadas via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de Cadastro -->
+  <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-96">
+      <h2 class="text-2xl font-semibold mb-6">Cadastrar Cliente</h2>
+      <form id="formCliente" class="flex flex-col gap-4">
+        <input type="text" id="nome" placeholder="Nome" class="bg-gray-700 p-3 rounded outline-none" required>
+        <input type="email" id="email" placeholder="E-mail" class="bg-gray-700 p-3 rounded outline-none" required>
+        <input type="text" id="telefone" placeholder="Telefone" class="bg-gray-700 p-3 rounded outline-none" required>
+        <input type="text" id="plano" placeholder="Plano" class="bg-gray-700 p-3 rounded outline-none" required>
+        <select id="status" class="bg-gray-700 p-3 rounded outline-none" required>
+          <option value="">Status</option>
+          <option value="Ativo">Ativo</option>
+          <option value="Inativo">Inativo</option>
+          <option value="Teste">Teste</option>
+        </select>
+        <div class="flex justify-between mt-4">
+          <button type="button" id="fecharModal" class="px-4 py-2 bg-red-600 hover:bg-red-700 rounded">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
 </body>
 </html>

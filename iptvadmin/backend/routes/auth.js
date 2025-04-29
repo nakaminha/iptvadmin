@@ -147,18 +147,6 @@ router.get('/logout', (req, res) => {
     });
 });
 
-// Rota de logout no backend
-router.post('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            console.error('Erro ao destruir sessão:', err);
-            return res.status(500).json({ error: 'Falha no logout' });
-        }
-        
-        res.clearCookie('connect.sid'); // Substitua pelo nome do seu cookie de sessão
-        res.status(200).json({ success: true });
-    });
-});
 
 // Registro (versão unificada e aprimorada)
 router.post('/register', async (req, res) => {

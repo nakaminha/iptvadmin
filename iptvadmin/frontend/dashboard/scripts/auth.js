@@ -1,142 +1,111 @@
-// auth.js - Sistema de Autenticação para Dashboard
-class AuthManager {
-    constructor() {
-      this.isAuthenticated = false;
-      this.checkAuthInterval = null;
-      this.config = {
-        sessionEndpoint: '/api/auth/check-session',
-        loginPage: '/login.html',
-        logoutEndpoint: '/api/auth/logout',
-        checkInterval: 300000, // 5 minutos
-      };
-    }
-  
-    /**
-     * Inicializa o sistema de autenticação
-     */
-    init() {
-      this.setupLogoutButton();
-      this.checkAuth(); // Verificação inicial
+// dashboard.js - Controle completo do Dashboard
+document.addEventListener('DOMContentLoaded', async () => {
+  // Elementos da UI
+  const usernameElement = document.getElementById('dashboard-username');
+  const logoutBtn = document.getElementById('logout-btn');
+  const loadingIndicator = document.getElementById('loading-indicator');
+  const contentArea = document.getElementById('dashboard-content');
+
+
+
+  // 2. Configuração do Logout
+  function setupLogout() {
+    logoutBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
       
-      // Verificação periódica
-      this.checkAuthInterval = setInterval(
-        () => this.checkAuth(), 
-        this.config.checkInterval
-      );
-      
-      // Verifica quando a página ganha foco
-      window.addEventListener('focus', () => this.checkAuth());
-    }
-  
-    /**
-     * Verifica o status de autenticação
-     */
-    async checkAuth() {
       try {
-        const response = await fetch(this.config.sessionEndpoint, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Cache-Control': 'no-cache, no-store, must-revalidate',
-            'Pragma': 'no-cache'
-          }
-        });
-  
-        if (!response.ok) {
-          throw new Error('Sessão inválida');
-        }
-  
-        const data = await response.json();
-        this.handleAuthSuccess(data.user);
+        logoutBtn.disabled = true;
+        logoutBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Saindo...';
         
-      } catch (error) {
-        this.handleAuthFailure(error);
-      }
-    }
-  
-    /**
-     * Configura o botão de logout
-     */
-    setupLogoutButton() {
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          this.logout();
-        });
-      }
-    }
-  
-    /**
-     * Executa o logout
-     */
-    async logout() {
-      try {
-        // Mostra estado de carregamento
-        document.body.classList.add('logging-out');
-        
-        await fetch(this.config.logoutEndpoint, {
+        await fetch('/api/auth/logout', {
           method: 'POST',
           credentials: 'include'
         });
         
-        this.redirectToLogin('logout_success');
-        
+        window.location.href = '/login.html?logout=success';
       } catch (error) {
         console.error('Erro no logout:', error);
-        this.redirectToLogin('logout_error');
+        window.location.href = '/login.html';
       }
-    }
-  
-    /**
-     * Atualiza a UI quando autenticado
-     */
-    handleAuthSuccess(user) {
-      this.isAuthenticated = true;
-      
-      // Atualiza o nome do usuário
-      const usernameElement = document.getElementById('username');
-      if (usernameElement) {
-        usernameElement.textContent = user.username;
-      }
-      
-      // Mostra conteúdo protegido
-      document.querySelectorAll('.auth-only').forEach(el => {
-        el.style.display = 'block';
+    });
+  }
+
+  // 3. Carregamento de Dados do Dashboard
+  async function loadDashboardData() {
+    try {
+      const response = await fetch('/api/dashboard', {
+        credentials: 'include'
       });
       
-      // Esconde conteúdo de login
-      document.querySelectorAll('.guest-only').forEach(el => {
-        el.style.display = 'none';
-      });
-    }
-  
-    /**
-     * Trata falhas de autenticação
-     */
-    handleAuthFailure(error) {
-      console.error('Falha na autenticação:', error);
-      this.isAuthenticated = false;
-      this.redirectToLogin('session_expired');
-    }
-  
-    /**
-     * Redireciona para a página de login
-     */
-    redirectToLogin(reason) {
-      // Limpa o intervalo de verificação
-      clearInterval(this.checkAuthInterval);
+      if (!response.ok) throw new Error('Falha ao carregar dados');
       
-      // Limpa o estado
-      this.isAuthenticated = false;
-      
-      // Redireciona de forma segura (replace não deixa voltar)
-      window.location.replace(`${this.config.loginPage}?reason=${reason}`);
+      const data = await response.json();
+      updateDashboardUI(data);
+    } catch (error) {
+      showError('Falha ao carregar dados do dashboard');
     }
   }
+
+  // 4. Atualização da UI
+  function updateDashboardUI(data) {
+    // Exemplo: Atualizar lista de canais
+    const channelsList = document.getElementById('channels-list');
+    if (channelsList && data.channels) {
+      channelsList.innerHTML = data.channels.map(ch => 
+        `<li class="list-group-item">${ch.name} - ${ch.status}</li>`
+      ).join('');
+    }
+    
+    // Atualizar outros elementos conforme necessário
+  }
+
+  // 5. Tratamento de Erros
+  function showError(message) {
+    const errorAlert = document.getElementById('error-alert');
+    if (errorAlert) {
+      errorAlert.textContent = message;
+      errorAlert.style.display = 'block';
+      setTimeout(() => errorAlert.style.display = 'none', 5000);
+    }
+  }
+
+  // Inicialização
+  await checkAuth();
+  setupLogout();
+  await loadDashboardData();
   
-  // Inicializa quando o DOM estiver pronto
-  document.addEventListener('DOMContentLoaded', () => {
-    const authManager = new AuthManager();
-    authManager.init();
-  });
+  // Verificação periódica (opcional)
+  setInterval(checkAuth, 300000); // 5 minutos
+});
+
+// Gerar gráfico de Barras 3D (simulado)
+function gerarGrafico3D() {
+  const ativos = clientes.filter(c => c.status === 'Ativo').length;
+  const inativos = clientes.filter(c => c.status === 'Inativo').length;
+  const teste = clientes.filter(c => c.status === 'Teste').length;
+
+  const data = [{
+    type: 'bar',
+    x: ['Ativos', 'Inativos', 'Teste'],
+    y: [ativos, inativos, teste],
+    marker: {
+      color: ['#3B82F6', '#EF4444', '#EAB308']
+    }
+  }];
+
+  const layout = {
+    title: 'Distribuição de Clientes (3D)',
+    paper_bgcolor: '#1F2937',
+    plot_bgcolor: '#1F2937',
+    font: {
+      color: '#FFFFFF'
+    },
+    scene: {
+      xaxis: { title: 'Status' },
+      yaxis: { title: 'Quantidade' }
+    }
+  };
+
+  Plotly.newPlot('grafico3d', data, layout);
+}
+

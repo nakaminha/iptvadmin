@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "chart.js": "^4.4.9",
     "connect-sqlite3": "^0.9.15",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
